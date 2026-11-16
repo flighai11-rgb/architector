@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d0e10">
+<title>Norda Architects — Built to outlast us</title>
+<meta name="description" content="Norda designs and develops buildings meant to be inherited. Scroll to watch one rise from empty land.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px);
+  --ink:#0d0e10;
+  --ivory:#efe9de;
+  --mute:rgba(239,233,222,.62);
+  --hair:rgba(239,233,222,.16);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --pad:clamp(20px,5vw,80px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+body{background:var(--ink);color:#fff;font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid #fff;outline-offset:4px}
+
+#gl,#glbg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+#glbg{display:none;background:#0d0e10;filter:blur(26px);transform:scale(1.12)}
+.scrim{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to top,rgba(6,10,16,.55),rgba(6,10,16,0) 52%),linear-gradient(to bottom,rgba(6,10,16,.38),rgba(6,10,16,0) 20%)}
+.veil{position:fixed;inset:0;z-index:50;background:#0d0e10;pointer-events:none;display:grid;place-items:center}
+.pre{display:flex;flex-direction:column;align-items:center;gap:18px;color:#efe9de}
+.pre-name{font:300 clamp(34px,6vw,64px)/1 var(--serif);letter-spacing:.02em}
+.pre-pct{font:400 13px/1 var(--sans);letter-spacing:.2em;opacity:.6;font-variant-numeric:tabular-nums}
+.pre-pct::after{content:'%'}
+
+/* nav */
+.nav{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:26px var(--pad);color:#fff}
+.mark{font:500 12px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase}
+.mark small{font-weight:400;letter-spacing:.2em;opacity:.7;margin-left:12px}
+.nav nav{display:flex;gap:34px;font-size:14px}
+.nav nav a{opacity:.82;position:relative;padding:4px 0}
+.nav nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.nav nav a:hover{opacity:1}.nav nav a:hover::after{transform:scaleX(1)}
+
+/* build gauge */
+.gauge{position:fixed;z-index:20;right:var(--pad);top:50%;transform:translateY(-50%);display:flex;gap:16px;align-items:stretch;height:min(44vh,360px);color:#fff;transition:opacity .5s}
+.gauge .rail{width:1px;background:rgba(255,255,255,.3);position:relative}
+.gauge .rail i{position:absolute;left:-1px;bottom:0;width:3px;height:calc(var(--p,0) * 1%);background:#fff}
+.gauge .txt{display:flex;flex-direction:column;justify-content:space-between;font-size:13px;line-height:1.35;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.gauge b{font:400 30px/1 var(--serif);font-variant-numeric:tabular-nums;display:block}
+.gauge span{opacity:.75}
+.gauge.hide{opacity:0}
+
+/* chapters */
+.story{position:relative;z-index:2}
+.chap{position:relative;display:flex;padding:0 var(--pad);min-height:100vh;min-height:100svh}
+.chap.hero{align-items:flex-end;padding-bottom:12vh}
+.chap.c1{align-items:center}
+.chap.c2{align-items:center;justify-content:center;text-align:center;min-height:140vh}
+.chap.c3{align-items:flex-end;justify-content:flex-end;padding-bottom:16vh;text-align:left;min-height:120vh}
+.chap.c4{align-items:flex-end;padding-bottom:14vh;min-height:130vh}
+.blk{max-width:min(1100px,100%)}
+h1,h2.big{font:300 clamp(46px,7.6vw,132px)/.96 var(--serif);letter-spacing:-.015em;text-shadow:0 2px 40px rgba(0,0,0,.28)}
+h2.big em,h1 em{font-style:italic;font-weight:300}
+.c2 h2.big{max-width:15ch}
+.c3 .blk{max-width:min(720px,100%)}
+.cap{font-size:15px;max-width:36ch;margin-top:26px;opacity:.9;text-shadow:0 1px 14px rgba(0,0,0,.5)}
+.hero .meta{display:flex;gap:28px;margin-top:34px;font-size:14px;opacity:.88;align-items:center}
+.cue{display:inline-flex;align-items:center;gap:12px}
+.cue i{display:block;width:1px;height:44px;background:rgba(255,255,255,.35);position:relative;overflow:hidden}
+.cue i::after{content:"";position:absolute;left:0;top:-100%;width:1px;height:100%;background:#fff;animation:drip 2.2s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes drip{to{top:100%}}
+
+/* split words */
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding:.08em 0 .14em;margin:-.08em 0 -.14em}
+.w>span{display:inline-block;will-change:transform}
+
+/* built list */
+.solid{position:relative;z-index:3;background:var(--ink);color:var(--ivory)}
+.built{padding:clamp(90px,14vh,170px) var(--pad) 40px}
+.built h2{font:300 clamp(40px,6vw,96px)/1 var(--serif);margin-bottom:clamp(40px,8vh,90px)}
+.list{list-style:none;border-top:1px solid var(--hair)}
+.row{display:grid;grid-template-columns:1.6fr 1fr 1fr 80px;gap:20px;align-items:baseline;padding:clamp(22px,3.6vh,38px) 0;border-bottom:1px solid var(--hair);transition:opacity .4s,padding .45s cubic-bezier(.2,.7,.2,1);cursor:default}
+.row .nm{font:300 clamp(34px,5vw,76px)/1 var(--serif)}
+.row .nm em{font-style:italic}
+.row .ty,.row .lo,.row .yr{font-size:14px;color:var(--mute)}
+.row .yr{text-align:right;font-variant-numeric:tabular-nums}
+.list:hover .row{opacity:.32}
+.list .row:hover{opacity:1;padding-left:22px}
+.list.touch:hover .row{opacity:1}
+
+.contact{padding:clamp(100px,18vh,200px) var(--pad) 40px}
+.contact h2{font:300 clamp(40px,7vw,120px)/.98 var(--serif);max-width:16ch}
+.mail{display:inline-block;margin-top:clamp(36px,6vh,64px);font:300 clamp(24px,3.4vw,52px)/1.1 var(--serif);font-style:italic;border-bottom:1px solid var(--ivory);padding-bottom:6px;transition:letter-spacing .5s,opacity .3s}
+.mail:hover{letter-spacing:.02em}
+.copied{display:block;min-height:1.6em;margin-top:12px;font-size:14px;color:var(--mute)}
+footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:80px var(--pad) 40px;font-size:13px;color:var(--mute)}
+
+@media (max-width:820px){
+  .nav nav a:not(.cta){display:none}
+  .mark small{display:none}
+  .gauge{height:30vh}
+  .gauge .txt span{display:none}
+  .row{grid-template-columns:1fr auto}
+  .row .ty,.row .lo{display:none}
+  .chap.c3{justify-content:flex-start}
+}
+
+@media (max-width:820px){
+  .nav{padding:calc(16px + var(--safe-t)) 20px 16px}
+  .nav nav{gap:18px;font-size:13px}
+  .gauge{top:0;left:0;right:0;transform:none;height:3px;gap:0;z-index:30}
+  .gauge .txt{display:none}
+  .gauge .rail{width:100%;height:3px;background:rgba(255,255,255,.22)}
+  .gauge .rail i{left:0;top:0;bottom:auto;height:3px;width:calc(var(--p,0) * 1%)}
+  .scrim{background:linear-gradient(to top,rgba(6,10,16,.7),rgba(6,10,16,0) 62%),linear-gradient(to bottom,rgba(6,10,16,.45),rgba(6,10,16,0) 22%)}
+  h1,h2.big{font-size:clamp(40px,12.4vw,62px);line-height:1}
+  .chap{padding-inline:20px;min-height:100vh;min-height:100svh}
+  .chap.hero{padding-bottom:calc(9vh + var(--safe-b))}
+  .chap.c1{align-items:flex-end;padding-bottom:calc(14vh + var(--safe-b))}
+  .chap.c2{min-height:130vh;align-items:flex-end;padding-bottom:22vh}
+  .chap.c3,.chap.c4{min-height:120vh;align-items:flex-end;padding-bottom:calc(12vh + var(--safe-b))}
+  .c2 h2.big{max-width:none}
+  .hero .meta{flex-direction:column;align-items:flex-start;gap:14px;margin-top:24px}
+  .cap{font-size:15px;max-width:30ch;margin-top:18px}
+  .built,.contact{padding-inline:20px}
+  .built h2{font-size:clamp(38px,11vw,56px)}
+  .row{grid-template-columns:1fr auto;gap:8px;padding:20px 0}
+  .row .nm{font-size:clamp(30px,9vw,44px)}
+  .contact h2{font-size:clamp(38px,11vw,60px)}
+  .mail{font-size:clamp(22px,7vw,32px)}
+  footer{padding:60px 20px calc(36px + var(--safe-b));flex-direction:column;gap:8px}
+}
+@media (max-width:820px) and (hover:none){
+  .list .row{padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){ .cue i::after{animation:none} }
+</style>
+</head>
+<body>
+
+<canvas id="glbg" aria-hidden="true"></canvas>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="scrim"></div>
+<div class="veil" id="veil"><div class="pre"><span class="pre-name">Norda</span><span class="pre-pct" id="prePct">0</span></div></div>
+
+<header class="nav">
+  <a class="mark" href="#top" data-go="top">Norda<small>Architects &amp; Developers</small></a>
+  <nav aria-label="Main">
+    <a href="#built" data-go="built">Previously built</a>
+    <a class="cta" href="#contact" data-go="contact">Contact</a>
+  </nav>
+</header>
+
+<aside class="gauge" id="gauge" aria-hidden="true">
+  <div class="rail"><i id="railFill"></i></div>
+  <div class="txt">
+    <div><b id="floorNum">1</b><span>of 8 stages</span></div>
+    <span id="stage">Surveying the site</span>
+  </div>
+</aside>
+
+<main>
+  <div class="story" id="story">
+    <section class="chap hero" id="top">
+      <div class="blk">
+        <h1 data-reveal data-delay="1.1">Before the building, the land.</h1>
+        <div class="meta"><span class="cue"><i></i>Scroll to build</span><span>Aurelia Tower, Marram Coast</span></div>
+      </div>
+    </section>
+
+    <section class="chap c1">
+      <div class="blk">
+        <h2 class="big" data-reveal>Every line is drawn to last.</h2>
+        <p class="cap" data-reveal>We begin with the ground, the light and the people who will live there. The drawings come after.</p>
+      </div>
+    </section>
+
+    <section class="chap c2">
+      <div class="blk">
+        <h2 class="big" data-reveal>Most buildings are sold. <em>The best are inherited.</em></h2>
+      </div>
+    </section>
+
+    <section class="chap c3">
+      <div class="blk">
+        <h2 class="big" data-reveal>In every detail, deliberate.</h2>
+        <p class="cap" data-reveal>Structure first. Then the skin. Then the light that makes it a home.</p>
+      </div>
+    </section>
+
+    <section class="chap c4">
+      <div class="blk">
+        <h2 class="big" data-reveal>Built to outlast us.</h2>
+        <p class="cap" data-reveal>Aurelia Tower. Completed 2026, on the Marram Coast.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="solid">
+    <section class="built" id="built">
+      <h2 data-reveal>Previously built</h2>
+      <ul class="list" id="list">
+        <li class="row"><span class="nm" data-reveal>Aurelia <em>Tower</em></span><span class="ty">Residential tower</span><span class="lo">Marram Coast</span><span class="yr">2026</span></li>
+        <li class="row"><span class="nm" data-reveal>Belvedere <em>Manor</em></span><span class="ty">Private estate</span><span class="lo">Tarn Valley</span><span class="yr">2024</span></li>
+        <li class="row"><span class="nm" data-reveal>Harbour <em>Library</em></span><span class="ty">Public library</span><span class="lo">Port Sellen</span><span class="yr">2023</span></li>
+        <li class="row"><span class="nm" data-reveal>Ninth Street <em>Housing</em></span><span class="ty">48 apartments</span><span class="lo">Eastfield</span><span class="yr">2022</span></li>
+        <li class="row"><span class="nm" data-reveal>Salt Works <em>Pavilion</em></span><span class="ty">Cultural pavilion</span><span class="lo">Marram Coast</span><span class="yr">2021</span></li>
+      </ul>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2 data-reveal>Tell us what should still be standing in a hundred years.</h2>
+      <a class="mail" id="mail" href="mailto:studio@norda.example">studio@norda.example</a>
+      <span class="copied" id="copied" role="status"></span>
+    </section>
+
+    <footer>
+      <span>Norda Architects &amp; Developers</span>
+      <span>14 Foundry Lane, Northgate</span>
+      <span>Sample content for design review</span>
+    </footer>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script type="module">
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const sstep = t => { t = clamp(t); return t * t * (3 - 2 * t); };
+const sstep5 = t => { t = clamp(t); return t * t * t * (t * (t * 6 - 15) + 10); };
+const range = (p, a, b) => clamp((p - a) / (b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+
+/* ───────────── smooth scroll ───────────── */
+gsap.registerPlugin(ScrollTrigger);
+const lenis = new Lenis({ lerp: reduce ? 1 : 0.085, wheelMultiplier: 0.9, smoothWheel: true });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  const id = a.getAttribute('data-go');
+  if (id === 'top') lenis.scrollTo(0, { duration: 2.4 });
+  else lenis.scrollTo('#' + id, { duration: 2.2, easing: t => 1 - Math.pow(1 - t, 4) });
+}));
+
+/* ───────────── word reveals ───────────── */
+function splitWords(root) {
+  const spans = [];
+  (function walk(node) {
+    Array.from(node.childNodes).forEach(n => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(tok => {
+          if (!tok) return;
+          if (/^\s+$/.test(tok)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const w = document.createElement('span'); w.className = 'w';
+          const s = document.createElement('span'); s.textContent = tok;
+          w.appendChild(s); frag.appendChild(w); spans.push(s);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) walk(n);
+    });
+  })(root);
+  return spans;
+}
+document.querySelectorAll('[data-reveal]').forEach(el => {
+  const words = splitWords(el);
+  gsap.set(words, { yPercent: 115 });
+  const delay = parseFloat(el.dataset.delay || 0);
+  const show = () => gsap.to(words, { yPercent: 0, duration: reduce ? 0 : 1.25, ease: 'power4.out', stagger: 0.055, delay, overwrite: true });
+  const hide = () => gsap.to(words, { yPercent: -115, duration: reduce ? 0 : 0.7, ease: 'power3.in', stagger: 0.02, overwrite: true });
+  const hideDown = () => gsap.to(words, { yPercent: 115, duration: reduce ? 0 : 0.6, ease: 'power3.in', stagger: 0.02, overwrite: true });
+  const inSolid = !!el.closest('.solid');
+  ScrollTrigger.create({
+    trigger: el, start: inSolid ? 'top 88%' : 'top 82%', end: inSolid ? 'bottom -200%' : 'bottom 18%',
+    onEnter: show, onEnterBack: show,
+    onLeave: inSolid ? () => {} : hide,
+    onLeaveBack: hideDown
+  });
+});
+
+/* hover dimming is for pointer devices only */
+if (matchMedia('(hover: none)').matches) document.getElementById('list').classList.add('touch');
+
+/* copy email */
+const mail = document.getElementById('mail'), copied = document.getElementById('copied');
+mail.addEventListener('click', e => {
+  if (!navigator.clipboard) return;
+  e.preventDefault();
+  navigator.clipboard.writeText('studio@norda.example').then(
+    () => { copied.textContent = 'Email address copied.'; },
+    () => { location.href = 'mailto:studio@norda.example'; });
+});
+
+/* ───────────── photoreal frame sequence ───────────── */
+const FRAMES = 8;
+const STAGES = ['Surveying the site', 'Pouring the foundation', 'Raising the core', 'Casting the frame', 'Fitting the glass', 'Facade complete', 'Landscaping', 'Golden hour'];
+const canvas = document.getElementById('gl');
+const ctx = canvas.getContext('2d');
+const imgs = new Array(FRAMES).fill(null);
+let W = 0, H = 0, dpr = 1;
+
+function loadFrame(i) {
+  return new Promise(res => {
+    const im = new Image();
+    im.decoding = 'async';
+    im.onload = () => { imgs[i] = im; res(im); };
+    im.onerror = () => res(null);
+    im.src = 'frames/s' + (i + 1) + '.jpg';
+  });
+}
+function nearest(i) {                       // closest frame that has finished loading
+  for (let d = 0; d < FRAMES; d++) {
+    if (imgs[i - d]) return imgs[i - d];
+    if (imgs[i + d]) return imgs[i + d];
+  }
+  return null;
+}
+
+const story = document.getElementById('story');
+const railFill = document.getElementById('railFill'), floorNum = document.getElementById('floorNum'),
+      stageEl = document.getElementById('stage'), gauge = document.getElementById('gauge');
+
+let target = 0, shown = 0, dirty = true, last = performance.now(), lastStage = -1;
+function readTarget() {
+  const max = Math.max(1, story.offsetHeight - innerHeight);
+  target = clamp(lenis.scroll / max);
+  gauge.classList.toggle('hide', lenis.scroll > story.offsetHeight - innerHeight * 0.4);
+}
+lenis.on('scroll', readTarget);
+
+const bg = document.getElementById('glbg'), bctx = bg.getContext('2d');
+const small = document.createElement('canvas'), sctx = small.getContext('2d');
+let tall = false, tallH = 0;
+const TALL_FRACTION = 0.46;                    // share of the photo's width shown on portrait screens
+
+function resize() {
+  dpr = Math.min(devicePixelRatio || 1, 2);
+  W = innerWidth; H = innerHeight;
+  canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  bg.width = Math.round(W * dpr); bg.height = Math.round(H * dpr);
+  tall = W < H * 0.9;
+  bg.style.display = tall ? 'block' : 'none';
+  if (tall) {
+    const ref = imgs.find(Boolean);
+    const ratio = ref ? ref.naturalHeight / ref.naturalWidth : 9 / 16;
+    tallH = (W / TALL_FRACTION) * ratio * 1.03;
+  }
+  canvas.style.maskImage = canvas.style.webkitMaskImage = 'none';
+  dirty = true; readTarget();
+}
+addEventListener('resize', resize);
+
+/* camera: glides up and down and pushes in close, then pulls back far. Vertical + zoom only, never sideways.
+   z = zoom, ty = vertical position (0 = looking at the top of the tower, 1 = looking at the ground) */
+const CAM = [
+  { p: 0.00, z: 1.00, ty: 0.12 },     // wide, the empty land
+  { p: 0.14, z: 1.14, ty: 0.80 },     // down low, close on the foundation
+  { p: 0.34, z: 1.30, ty: 0.55 },     // close-up on the rising frame
+  { p: 0.54, z: 1.12, ty: 0.05 },     // glide up to the crown of the tower
+  { p: 0.74, z: 1.28, ty: 0.30 },     // close again on the glass
+  { p: 0.90, z: 1.06, ty: 0.15 },     // pull back
+  { p: 1.00, z: 1.00, ty: 0.12 }      // far, the finished tower
+];
+function catmull(a, b, c, d, t) {      // 1D Catmull-Rom, so the camera flows through every key without stopping
+  return 0.5 * ((2 * b) + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
+}
+function cam(p) {
+  let i = 0; while (i < CAM.length - 2 && p > CAM[i + 1].p) i++;
+  const t = range(p, CAM[i].p, CAM[i + 1].p);
+  const k0 = CAM[Math.max(i - 1, 0)], k1 = CAM[i], k2 = CAM[i + 1], k3 = CAM[Math.min(i + 2, CAM.length - 1)];
+  return { z: catmull(k0.z, k1.z, k2.z, k3.z, t), ty: clamp(catmull(k0.ty, k1.ty, k2.ty, k3.ty, t)) };
+}
+
+function layout(im, p) {
+  const iw = im.naturalWidth, ih = im.naturalHeight, k = cam(p);
+  if (tall) {
+    const sc = W / TALL_FRACTION / iw, z = 1 + (k.z - 1) * 0.9;
+    const w = iw * sc * z, h = ih * sc * z;
+    return { x: (W - w) / 2, y: -(h - ih * sc) * k.ty, w, h };
+  }
+  const sc = Math.max(W / iw, H / ih) * k.z;
+  const w = iw * sc, h = ih * sc;
+  return { x: (W - w) / 2, y: -(h - H) * k.ty, w, h };
+}
+
+/* the next stage rises from the ground to the sky as a soft wipe, so the building appears to grow */
+const wipeC = document.createElement('canvas'), wctx = wipeC.getContext('2d');
+function wipe(im, R, t) {
+  const td = Math.min(dpr, 1.5);
+  const tw = Math.round(W * td), th = Math.round(H * td);
+  if (wipeC.width !== tw || wipeC.height !== th) { wipeC.width = tw; wipeC.height = th; }
+  const fe = R.h * 0.16, yf = lerp(R.y + R.h + fe, R.y - fe, t);
+  wctx.setTransform(td, 0, 0, td, 0, 0);
+  wctx.globalCompositeOperation = 'source-over';
+  wctx.clearRect(0, 0, W, H);
+  wctx.drawImage(im, R.x, R.y, R.w, R.h);
+  const g = wctx.createLinearGradient(0, yf - fe, 0, yf);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,1)');
+  wctx.globalCompositeOperation = 'destination-in';
+  wctx.fillStyle = g; wctx.fillRect(0, 0, W, H);
+  wctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 1;
+  ctx.drawImage(wipeC, 0, 0, W, H);
+}
+
+function blurBackdrop(im, alpha) {            // downsample then upscale = cheap blur, no per-frame filter cost
+  if (!im || alpha <= 0.001) return;
+  small.width = 90; small.height = Math.max(12, Math.round(90 * H / W));
+  const sc = Math.max(small.width / im.naturalWidth, small.height / im.naturalHeight);
+  sctx.drawImage(im, (small.width - im.naturalWidth * sc) / 2, (small.height - im.naturalHeight * sc) / 2, im.naturalWidth * sc, im.naturalHeight * sc);
+  bctx.globalAlpha = alpha;
+  bctx.imageSmoothingQuality = 'high';
+  bctx.drawImage(small, 0, 0, W, H);
+}
+
+function draw() {
+  const f = shown * (FRAMES - 1);
+  const i = Math.min(Math.floor(f), FRAMES - 2);
+  const t = f - i;
+  const a = nearest(i), b = nearest(i + 1);
+  if (!a) return;
+  const R = layout(a, shown);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  if (tall) {
+    bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    bctx.globalAlpha = 1; bctx.fillStyle = '#0d0e10'; bctx.fillRect(0, 0, W, H);
+    sctx.clearRect(0, 0, small.width, small.height);
+    blurBackdrop(a, 1);
+    if (b !== a) { sctx.clearRect(0, 0, small.width, small.height); blurBackdrop(b, sstep(t)); }
+  }
+  ctx.globalAlpha = 1;
+  ctx.drawImage(a, R.x, R.y, R.w, R.h);
+  if (b !== a && t > 0.002) wipe(b, R, t);
+
+  if (tall) {                                    // soft lower edge: dissolve the photo into the blurred backdrop
+    const fe = R.h * 0.2, g2 = ctx.createLinearGradient(0, R.y + R.h - fe, 0, R.y + R.h);
+    g2.addColorStop(0, 'rgba(0,0,0,0)'); g2.addColorStop(1, 'rgba(0,0,0,1)');
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = g2; ctx.fillRect(0, R.y + R.h - fe, W, fe + 2);
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  // sunset glow builds as the sun reaches the horizon in the last stage
+  const gl = sstep(range(shown, 0.86, 1));
+  if (gl > 0.01) {
+    const sx = R.x + R.w * 0.985, sy = R.y + R.h * 0.43, rad = Math.max(W, H) * 0.55;
+    const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, rad);
+    g.addColorStop(0, 'rgba(255,190,110,' + (0.5 * gl).toFixed(3) + ')');
+    g.addColorStop(0.35, 'rgba(255,140,60,' + (0.16 * gl).toFixed(3) + ')');
+    g.addColorStop(1, 'rgba(255,120,40,0)');
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  ctx.globalAlpha = 1;
+}
+
+let visible = true;
+new IntersectionObserver(en => { visible = en[0].isIntersecting; }).observe(story);
+
+function frame(now) {
+  const dt = Math.min((now - last) / 1000, 0.1); last = now;
+  const prev = shown;
+  if (reduce) shown = target; else shown += (target - shown) * (1 - Math.exp(-dt * 5.5));
+  if (Math.abs(shown - prev) > 1e-5) dirty = true;
+
+  if (dirty && (visible || target > 0.99)) {
+    dirty = false;
+    draw();
+    railFill.style.setProperty('--p', (shown * 100).toFixed(2));
+    const s = Math.min(FRAMES - 1, Math.round(shown * (FRAMES - 1)));
+    if (s !== lastStage) {
+      lastStage = s;
+      floorNum.textContent = s + 1;
+      stageEl.textContent = STAGES[s];
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+resize();
+const prePct = document.getElementById('prePct');
+let loaded = 0;
+function tick() { loaded++; prePct.textContent = Math.round(loaded / FRAMES * 100); }
+function reveal() {
+  if (reveal.done) return; reveal.done = true;
+  resize(); dirty = true;
+  requestAnimationFrame(frame);
+  gsap.to('.pre', { opacity: 0, duration: 0.5, ease: 'power1.out' });
+  gsap.to('#veil', { opacity: 0, duration: reduce ? 0 : 1.6, delay: reduce ? 0 : 0.35, ease: 'power2.inOut',
+    onComplete: () => { document.getElementById('veil').style.display = 'none'; } });
+}
+// wait for the whole sequence so scrolling never shows a half-loaded stage; never wait longer than 7s
+const all = Array.from({ length: FRAMES }, (_, i) => loadFrame(i).then(r => { tick(); dirty = true; return r; }));
+Promise.all(all).then(reveal);
+setTimeout(() => { if (imgs[0]) reveal(); }, 7000);
+</script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Norda Architects — Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#123b9e;
+  --paper-deep:#0d2e82;
+  --line:#eaf2ff;
+  --dim:rgba(234,242,255,.62);
+  --faint:rgba(234,242,255,.14);
+  --faint2:rgba(234,242,255,.06);
+  --mark:#ffd84a;
+  --head:'Barlow Condensed',system-ui,sans-serif;
+  --body:'Barlow',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--faint) 1px,transparent 1px),
+    linear-gradient(90deg,var(--faint) 1px,transparent 1px),
+    linear-gradient(var(--faint2) 1px,transparent 1px),
+    linear-gradient(90deg,var(--faint2) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  color:var(--line);
+  font:400 18px/1.55 var(--body);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--mark);outline-offset:3px}
+.wrap{width:min(1280px,100% - 48px);margin-inline:auto}
+
+/* header */
+header.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--faint)}
+.logo{font:700 26px/1 var(--head);letter-spacing:.04em;text-decoration:none}
+.logo small{display:block;font:500 12px/1.4 var(--body);letter-spacing:.14em;color:var(--dim);margin-top:4px}
+nav.main{display:flex;gap:30px;align-items:center}
+nav.main a{text-decoration:none;font-weight:500;color:var(--dim);transition:color .2s}
+nav.main a:hover{color:var(--line)}
+.btn{display:inline-block;border:1.5px solid var(--line);padding:10px 20px;text-decoration:none;font-weight:600;background:transparent;color:var(--line);cursor:pointer;font-family:var(--body);font-size:16px;transition:background .2s,color .2s}
+.btn:hover{background:var(--line);color:var(--paper)}
+
+/* hero */
+.hero{padding:56px 0 40px}
+.hero h1{font:600 clamp(54px,9.6vw,148px)/.88 var(--head);letter-spacing:-.005em;max-width:12ch}
+.hero .lede{max-width:46ch;margin-top:26px;color:var(--dim);font-size:19px}
+.layers{display:flex;flex-wrap:wrap;gap:8px;margin:44px 0 14px;align-items:center}
+.layers>span{color:var(--dim);font-size:15px;margin-right:6px}
+.layers label{cursor:pointer}
+.layers input{position:absolute;opacity:0;pointer-events:none}
+.layers label span{display:inline-block;border:1px solid var(--faint);padding:6px 14px;font-size:15px;font-weight:500;color:var(--dim);transition:all .2s;background:rgba(13,46,130,.4)}
+.layers input:checked+span{border-color:var(--mark);color:var(--mark)}
+.layers input:focus-visible+span{outline:2px solid var(--mark);outline-offset:2px}
+
+.sheet{position:relative;border:2px solid var(--line);background:rgba(13,46,130,.35);cursor:crosshair;touch-action:pan-y;overflow:hidden}
+.sheet::before{content:"";position:absolute;inset:8px;border:1px solid var(--faint);pointer-events:none}
+.sheet svg.elev{display:block;width:100%;height:auto}
+.cross-x,.cross-y{position:absolute;pointer-events:none;background:var(--mark);opacity:0;transition:opacity .2s}
+.cross-x{left:0;right:0;height:1px}
+.cross-y{top:0;bottom:0;width:1px}
+.readout{position:absolute;pointer-events:none;background:var(--mark);color:#0d2e82;font:600 13px/1 var(--body);padding:5px 8px;opacity:0;transition:opacity .2s;white-space:nowrap}
+.sheet:hover .cross-x,.sheet:hover .cross-y,.sheet:hover .readout{opacity:1}
+.titleblock{position:absolute;right:8px;bottom:8px;border:1px solid var(--line);background:var(--paper-deep);display:grid;grid-template-columns:auto auto;font-size:12px;line-height:1.35;pointer-events:none}
+.titleblock div{padding:6px 12px;border-right:1px solid var(--line)}
+.titleblock div:last-child{border-right:0}
+.titleblock b{display:block;font:600 16px/1.1 var(--head);letter-spacing:.04em}
+.titleblock em{font-style:normal;color:var(--dim)}
+
+/* svg styling */
+svg.elev *{fill:none;stroke:var(--line);stroke-width:1.6;stroke-linecap:square;stroke-linejoin:miter}
+svg.elev .heavy{stroke-width:3}
+svg.elev .thin{stroke-width:1;stroke:var(--dim)}
+svg.elev .dash{stroke-dasharray:7 5;stroke:var(--dim)}
+svg.elev text{fill:var(--line);stroke:none;font:500 13px var(--body);letter-spacing:.08em}
+svg.elev .dimtxt{fill:var(--mark)}
+svg.elev .dimline{stroke:var(--mark);stroke-width:1}
+svg.elev g.layer{transition:opacity .35s}
+svg.elev g.layer.off{opacity:0}
+.draw>*{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.5s cubic-bezier(.6,.05,.2,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.fadein{opacity:0;animation:fadein .9s 2.2s forwards}
+@keyframes fadein{to{opacity:1}}
+
+/* sections */
+section{padding:110px 0 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:30px;border-bottom:2px solid var(--line);padding-bottom:14px;margin-bottom:0}
+.sec-head h2{font:600 clamp(40px,6vw,84px)/.92 var(--head)}
+.sec-head p{max-width:34ch;color:var(--dim);font-size:16px}
+
+.index{display:grid;grid-template-columns:1.5fr 1fr;gap:0;border-bottom:2px solid var(--line)}
+.rows{list-style:none}
+.row{display:grid;grid-template-columns:74px 1.4fr 1fr 90px;gap:16px;align-items:baseline;padding:22px 16px 22px 0;border-bottom:1px solid var(--faint);cursor:pointer;transition:background .2s,padding .25s}
+.row:hover,.row:focus-visible,.row.active{background:rgba(234,242,255,.07);padding-left:14px}
+.row .sh{color:var(--mark);font-weight:600;font-size:15px}
+.row .nm{font:600 clamp(26px,3vw,40px)/1 var(--head)}
+.row .ty{color:var(--dim);font-size:16px}
+.row .yr{text-align:right;color:var(--dim)}
+.planbox{position:sticky;top:0;align-self:start;border-left:1px solid var(--faint);padding:26px 0 26px 30px;height:fit-content}
+.planbox svg{width:100%;height:auto;display:block}
+.planbox svg *{fill:none;stroke:var(--line);stroke-linecap:square}
+.planbox .w{stroke-width:4}
+.planbox .t{stroke-width:1.2;stroke:var(--dim)}
+.planbox text{fill:var(--dim);stroke:none;font:500 9px var(--body);letter-spacing:.1em}
+.planmeta{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;font-size:15px;color:var(--dim)}
+.planmeta b{display:block;color:var(--line);font:600 20px/1.2 var(--head);letter-spacing:.03em}
+
+.practice{display:grid;grid-template-columns:repeat(4,1fr);border-left:1px solid var(--faint)}
+.cell{position:relative;padding:30px 24px 34px;border-right:1px solid var(--faint);border-bottom:1px solid var(--faint)}
+.cell::before,.cell::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--line)}
+.cell::before{left:-6px;top:-6px;border-width:0 1px 1px 0}
+.cell::after{right:-6px;top:-6px;border-width:0 0 1px 1px}
+.cell h3{font:600 32px/1 var(--head);margin-bottom:12px}
+.cell p{font-size:16px;color:var(--dim)}
+
+.contact{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:start}
+.contact h2{font:600 clamp(44px,6.5vw,96px)/.9 var(--head)}
+.contact .mail{display:inline-block;margin-top:24px;font:600 26px/1 var(--head);letter-spacing:.04em;border-bottom:2px solid var(--mark);text-decoration:none;padding-bottom:4px}
+form.tb{border:2px solid var(--line);background:rgba(13,46,130,.55)}
+form.tb .f{display:grid;grid-template-columns:130px 1fr;border-bottom:1px solid var(--line)}
+form.tb label{padding:14px 16px;border-right:1px solid var(--line);color:var(--dim);font-size:15px}
+form.tb input,form.tb textarea{background:transparent;border:0;color:var(--line);padding:14px 16px;font:400 17px var(--body);width:100%;resize:vertical}
+form.tb input:focus,form.tb textarea:focus{outline:none;background:rgba(255,216,74,.08)}
+form.tb .go{padding:16px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+#sent{color:var(--mark);font-weight:500;font-size:15px}
+
+footer{margin-top:120px;border-top:2px solid var(--line);padding:26px 0 110px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--dim);font-size:15px}
+
+@media (max-width:900px){
+  nav.main a:not(.btn){display:none}
+  .index{grid-template-columns:1fr}
+  .planbox{position:static;border-left:0;padding-left:0;border-top:1px solid var(--faint)}
+  .row{grid-template-columns:60px 1fr 70px}
+  .row .ty{display:none}
+  .practice{grid-template-columns:1fr 1fr}
+  .contact{grid-template-columns:1fr;gap:40px}
+  .sec-head{flex-direction:column;align-items:start}
+  .titleblock{display:none}
+}
+@media (max-width:520px){ .practice{grid-template-columns:1fr} form.tb .f{grid-template-columns:1fr} form.tb label{border-right:0;padding-bottom:0} }
+@media (prefers-reduced-motion:reduce){
+  .draw>*{animation:none;stroke-dashoffset:0}
+  .fadein{animation:none;opacity:1}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body data-design="blueprint">
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#top">NORDA<small>ARCHITECTS</small></a>
+    <nav class="main" aria-label="Main">
+      <a href="#projects">Projects</a>
+      <a href="#practice">Practice</a>
+      <a class="btn" href="#contact">Start a project</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <h1>Drawn to the last millimetre.</h1>
+      <p class="lede">Norda designs houses, libraries and housing for people who want to know why every wall is where it is. Every project starts as a drawing you can read.</p>
+
+      <div class="layers" role="group" aria-label="Drawing layers">
+        <span>Layers on this drawing</span>
+        <label><input type="checkbox" data-layer="structure" checked><span>Structure</span></label>
+        <label><input type="checkbox" data-layer="dims" checked><span>Dimensions</span></label>
+        <label><input type="checkbox" data-layer="people" checked><span>People and trees</span></label>
+        <label><input type="checkbox" data-layer="ground" checked><span>Ground</span></label>
+      </div>
+
+      <div class="sheet" id="sheet">
+        <svg class="elev" viewBox="0 0 960 480" role="img" aria-label="South elevation drawing of Ridge House with a cantilevered upper floor and a stair core">
+          <!-- ground hatch -->
+          <g class="layer" data-l="ground"><g id="hatch" class="thin"></g></g>
+
+          <!-- main building lines -->
+          <g class="draw heavy" id="walls">
+            <path d="M60 380H900"/>
+            <path d="M140 380V230H260V130H760V230H560V380"/>
+            <path d="M250 122H770"/>
+            <path d="M250 122V130"/><path d="M770 122V130"/>
+            <path d="M600 60V122"/><path d="M680 60V122"/><path d="M600 60H680"/>
+            <path d="M600 230V380"/><path d="M680 230V380"/>
+          </g>
+          <g class="draw" id="details">
+            <path d="M180 270H440V380"/><path d="M180 270V380"/>
+            <path d="M245 270V380"/><path d="M310 270V380"/><path d="M375 270V380"/>
+            <path d="M470 300H530V380H470Z"/>
+            <path d="M300 160H560V200H300Z"/>
+            <path d="M352 160V200"/><path d="M404 160V200"/><path d="M456 160V200"/><path d="M508 160V200"/>
+            <path d="M650 160H710V200H650Z"/>
+            <path d="M140 230H260"/>
+          </g>
+
+          <!-- structure -->
+          <g class="layer fadein" data-l="structure">
+            <path class="dash" d="M260 230L330 130L400 230L470 130L540 230L610 130L680 230L750 130"/>
+            <path class="dash" d="M170 230V380"/><path class="dash" d="M350 230V380"/><path class="dash" d="M530 230V380"/>
+            <path class="thin" d="M140 238H560"/>
+          </g>
+
+          <!-- people, trees -->
+          <g class="layer fadein" data-l="people">
+            <g class="thin"><circle cx="500" cy="322" r="7"/><path d="M500 329V356M500 336L488 352M500 336L512 352M500 356L492 380M500 356L508 380"/></g>
+            <g class="thin"><circle cx="110" cy="334" r="6"/><path d="M110 340V362M110 346L101 358M110 346L119 358M110 362L104 380M110 362L116 380"/></g>
+            <g class="thin"><path d="M840 380V318"/><circle cx="840" cy="290" r="40"/><circle cx="840" cy="290" r="26"/></g>
+          </g>
+
+          <!-- dimensions -->
+          <g class="layer fadein" data-l="dims">
+            <g class="dimline">
+              <path d="M140 440H760"/><path d="M140 384V448"/><path d="M760 232V448"/>
+              <path d="M134 446L146 434"/><path d="M754 446L766 434"/>
+              <path d="M140 410H560"/><path d="M560 384V418"/>
+              <path d="M134 416L146 404"/><path d="M554 416L566 404"/>
+              <path d="M830 122V380"/><path d="M766 122H838"/><path d="M834 386H826"/>
+              <path d="M824 128L836 116"/><path d="M824 386L836 374"/>
+            </g>
+            <text class="dimtxt" x="450" y="434" text-anchor="middle">15 500</text>
+            <text class="dimtxt" x="350" y="404" text-anchor="middle">10 500</text>
+            <text class="dimtxt" transform="translate(850 260) rotate(-90)" text-anchor="middle">6 450</text>
+            <g>
+              <path d="M40 380h16l-8 -11z"/><text x="62" y="372">+0.00</text>
+              <path d="M868 122h16l-8 -11z" transform="translate(-92 0)"/><text x="796" y="115">+6.45</text>
+            </g>
+          </g>
+        </svg>
+
+        <div class="cross-x" id="cx"></div>
+        <div class="cross-y" id="cy"></div>
+        <div class="readout" id="ro">X 0  Y 0</div>
+
+        <div class="titleblock" aria-hidden="true">
+          <div><b>RIDGE HOUSE</b><em>South elevation</em></div>
+          <div><b>A-201</b><em>Scale 1:100</em></div>
+        </div>
+      </div>
+    </div>
+
+    <section id="projects">
+      <div class="sec-head">
+        <h2>Selected projects</h2>
+        <p>Point at a project to see its floor plan.</p>
+      </div>
+      <div class="index">
+        <ul class="rows" id="rows"></ul>
+        <aside class="planbox" aria-live="polite">
+          <div id="plan"></div>
+          <div class="planmeta" id="planmeta"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="practice">
+      <div class="sec-head">
+        <h2>What we draw</h2>
+        <p>Four kinds of work. One way of working: plan first, material second, decoration last.</p>
+      </div>
+      <div class="practice">
+        <div class="cell"><h3>Houses</h3><p>Private homes from a single room extension to a full site masterplan.</p></div>
+        <div class="cell"><h3>Public buildings</h3><p>Libraries, pavilions and civic rooms that people actually want to stay in.</p></div>
+        <div class="cell"><h3>Housing</h3><p>Apartment blocks with daylight in every room and stairs worth walking.</p></div>
+        <div class="cell"><h3>Interiors</h3><p>Joinery, lighting and furniture drawn with the building, not after it.</p></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact">
+        <div>
+          <h2>Tell us what you want to build.</h2>
+          <a class="mail" href="mailto:studio@norda.example">studio@norda.example</a>
+        </div>
+        <form class="tb" id="form">
+          <div class="f"><label for="n">Name</label><input id="n" name="name" autocomplete="name" required></div>
+          <div class="f"><label for="e">Email</label><input id="e" type="email" name="email" autocomplete="email" required></div>
+          <div class="f"><label for="b">Your project</label><textarea id="b" name="brief" rows="4" required></textarea></div>
+          <div class="go"><span id="sent" role="status"></span><button class="btn" type="submit">Send enquiry</button></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Norda Architects</span>
+    <span>14 Foundry Lane, Northgate</span>
+    <span>Sample content for design review</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // draw animation: normalise path lengths, then stagger
+  var drawn = document.querySelectorAll('.draw > *');
+  drawn.forEach(function(el, i){
+    el.setAttribute('pathLength', '1');
+    if (!reduce) el.style.animationDelay = (i * 0.09) + 's';
+  });
+
+  // ground hatch
+  var h = document.getElementById('hatch'), d = '';
+  for (var x = 74; x < 900; x += 14) d += 'M' + x + ' 380l-12 14';
+  h.innerHTML = '<path d="' + d + '"/>';
+
+  // layer toggles
+  document.querySelectorAll('.layers input').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      var g = document.querySelector('svg.elev [data-l="' + cb.dataset.layer + '"]');
+      if (g) g.classList.toggle('off', !cb.checked);
+    });
+  });
+
+  // crosshair with real-world readout (1 drawing unit = 25 mm)
+  var sheet = document.getElementById('sheet'), cx = document.getElementById('cx'),
+      cy = document.getElementById('cy'), ro = document.getElementById('ro');
+  function fmt(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  sheet.addEventListener('pointermove', function(e){
+    var r = sheet.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top;
+    cx.style.top = py + 'px'; cy.style.left = px + 'px';
+    var ux = px / r.width * 960, uy = py / r.height * 480;
+    ro.textContent = 'X ' + fmt(ux * 25) + '   Y ' + fmt(Math.max(0, (380 - uy)) * 25);
+    ro.style.left = Math.min(px + 14, r.width - 150) + 'px';
+    ro.style.top = Math.max(py - 30, 6) + 'px';
+  });
+
+  // projects
+  var P = [
+    { sh:'A-101', nm:'Ridge House', ty:'Private residence', loc:'Tarn Valley', yr:'2024', area:'310 m²',
+      plan:'<path class="w" d="M30 50H190V30H270V170H30Z"/><path class="t" d="M30 112H130V170M130 112H190M190 50V112H270"/><path class="t" d="M76 170a22 22 0 0 1 22-22"/><text x="52" y="86">LIVING</text><text x="210" y="76">STUDY</text><text x="60" y="146">KITCHEN</text><text x="168" y="146">BEDROOM</text>' },
+    { sh:'A-102', nm:'Harbour Library', ty:'Public library', loc:'Port Sellen', yr:'2023', area:'4 200 m²',
+      plan:'<path class="w" d="M20 40H280V180H20Z"/><path class="t" d="M20 100H170M170 40V100M210 100V180M210 100H280"/><circle class="t" cx="110" cy="140" r="26"/><path class="t" d="M40 60H150M40 72H150M40 84H150"/><text x="186" y="74">CAFE</text><text x="226" y="146">ARCHIVE</text><text x="90" y="143">ATRIUM</text>' },
+    { sh:'A-103', nm:'Ninth Street Housing', ty:'48 apartments', loc:'Eastfield', yr:'2022', area:'5 800 m²',
+      plan:'<path class="w" d="M20 30H280V80H20Z"/><path class="w" d="M20 140H280V190H20Z"/><path class="w" d="M130 80H170V140H130Z"/><path class="t" d="M70 30V80M120 30V80M180 30V80M230 30V80M70 140V190M120 140V190M180 140V190M230 140V190"/><text x="136" y="114">STAIR</text><text x="30" y="110">COURT</text>' },
+    { sh:'A-104', nm:'Salt Works Pavilion', ty:'Cultural pavilion', loc:'Marram Coast', yr:'2021', area:'640 m²',
+      plan:'<path class="w" d="M150 24L270 96L228 176H72L30 96Z"/><path class="t" d="M150 24V176M30 96H270"/><circle class="t" cx="150" cy="100" r="22"/><text x="118" y="104">HALL</text><text x="60" y="140">SHOP</text><text x="212" y="140">TEA</text>' }
+  ];
+  var rows = document.getElementById('rows'), plan = document.getElementById('plan'), meta = document.getElementById('planmeta');
+  P.forEach(function(p, i){
+    var li = document.createElement('li');
+    li.className = 'row'; li.tabIndex = 0;
+    li.innerHTML = '<span class="sh">' + p.sh + '</span><span class="nm">' + p.nm + '</span><span class="ty">' + p.ty + '</span><span class="yr">' + p.yr + '</span>';
+    ['mouseenter','focus','click'].forEach(function(ev){ li.addEventListener(ev, function(){ show(i); }); });
+    rows.appendChild(li);
+  });
+  function show(i){
+    var p = P[i];
+    plan.innerHTML = '<svg viewBox="0 0 300 200" role="img" aria-label="Floor plan of ' + p.nm + '">' + p.plan + '</svg>';
+    meta.innerHTML = '<div><b>' + p.nm + '</b>' + p.ty + '</div><div><b>' + p.area + '</b>' + p.loc + ', ' + p.yr + '</div>';
+    rows.querySelectorAll('.row').forEach(function(r, k){ r.classList.toggle('active', k === i); });
+  }
+  show(0);
+
+  // form
+  document.getElementById('form').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('sent').textContent = 'Received. We reply within two working days.';
+    e.target.reset();
+  });
+})();
+</script>
+<script src="../shared/picker.js"></script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Norda Architects — Monolith</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --concrete:#c7c4bd;
+  --slab:#a9a69f;
+  --ink:#141414;
+  --sig:#ff5a1f;
+  --bone:#e4e1da;
+  --f:'Archivo',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--concrete);color:var(--ink);font:400 19px/1.5 var(--f);font-stretch:100%;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:4px solid var(--sig);outline-offset:3px}
+.pad{padding-inline:clamp(20px,4vw,64px)}
+
+/* hero with raking light */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;background:var(--concrete)}
+.tex{position:absolute;left:0;top:0;width:50%;height:50%;transform:scale(2);transform-origin:0 0;mix-blend-mode:multiply;pointer-events:none}
+.hero>*:not(.tex){position:relative}
+.bar{display:flex;justify-content:space-between;align-items:center;padding-top:26px;padding-bottom:26px;font-weight:700;font-stretch:110%}
+.bar nav{display:flex;gap:30px}
+.bar a{text-decoration:none;border-bottom:3px solid transparent}
+.bar a:hover{border-color:var(--ink)}
+.bar .tag{background:var(--ink);color:var(--concrete);padding:8px 14px;border:0}
+.bar .tag:hover{background:var(--sig);color:var(--ink)}
+.hero-mid{margin-top:auto;display:flex;justify-content:space-between;align-items:end;gap:30px;padding-bottom:10px}
+.hero-mid p{max-width:26ch;font-size:clamp(20px,2vw,28px);line-height:1.15;font-weight:600;font-stretch:90%;margin-bottom:8vw}
+.hint{font-size:15px;font-weight:600;border-left:6px solid var(--sig);padding-left:12px;margin-bottom:8vw;max-width:20ch}
+.word{font-weight:900;font-stretch:125%;font-size:27.5vw;line-height:.74;letter-spacing:-.045em;white-space:nowrap;margin-left:-1.2vw;margin-bottom:-.02em;user-select:none}
+
+/* statement */
+.statement{background:var(--ink);color:var(--concrete);padding-top:120px;padding-bottom:120px}
+.statement h2{font-weight:900;font-stretch:118%;font-size:clamp(44px,8.4vw,150px);line-height:.88;letter-spacing:-.03em;max-width:15ch}
+.statement .cols{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:70px;max-width:1000px}
+.statement p{font-size:20px}
+.statement p b{color:var(--sig)}
+
+/* slabs */
+.slabs{padding-top:110px;padding-bottom:120px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:40px}
+.head h2{font-weight:900;font-stretch:118%;font-size:clamp(40px,6.6vw,110px);line-height:.88;letter-spacing:-.03em}
+.head p{font-weight:600;font-size:16px;max-width:22ch}
+.strip{display:flex;gap:28px;overflow-x:auto;padding:14px clamp(20px,4vw,64px) 40px;cursor:grab;scrollbar-color:var(--ink) transparent;scrollbar-width:thin;user-select:none;-webkit-user-select:none}
+.strip.drag{cursor:grabbing}
+.strip:focus-visible{outline-offset:-4px}
+.slab{flex:0 0 min(360px,78vw);height:540px;position:relative;border:4px solid var(--ink);padding:20px;display:flex;flex-direction:column;justify-content:space-between;background-color:var(--slab);transition:transform .25s,box-shadow .25s;box-shadow:0 0 0 var(--ink)}
+.slab:hover{transform:translate(-6px,-6px);box-shadow:12px 12px 0 var(--ink)}
+.slab .facade{position:absolute;inset:0;opacity:.9;pointer-events:none}
+.slab>*:not(.facade){position:relative}
+.slab .n{font-weight:900;font-stretch:125%;font-size:150px;line-height:.8;letter-spacing:-.05em;background:var(--concrete);padding:10px 12px 4px;align-self:start;border:4px solid var(--ink)}
+.slab .n small{display:block;font-size:15px;letter-spacing:0;font-weight:700;font-stretch:100%;margin-top:6px}
+.slab .cap{background:var(--ink);color:var(--concrete);padding:14px 16px}
+.slab .cap h3{font-weight:800;font-stretch:112%;font-size:26px;line-height:1.05}
+.slab .cap span{font-size:15px;opacity:.8}
+.f1{background-image:repeating-linear-gradient(90deg,transparent 0 34px,rgba(20,20,20,.88) 34px 52px),repeating-linear-gradient(0deg,var(--slab) 0 40px,transparent 40px 58px)}
+.f2{background-image:repeating-linear-gradient(0deg,transparent 0 22px,rgba(20,20,20,.9) 22px 30px),repeating-linear-gradient(90deg,var(--slab) 0 120px,transparent 120px 128px)}
+.f3{background-image:repeating-linear-gradient(90deg,rgba(20,20,20,.88) 0 14px,transparent 14px 46px),repeating-linear-gradient(0deg,var(--slab) 0 26px,transparent 26px 34px)}
+.f4{background-image:linear-gradient(135deg,transparent 0 48%,rgba(20,20,20,.88) 48% 52%,transparent 52%),repeating-linear-gradient(0deg,transparent 0 60px,rgba(20,20,20,.88) 60px 66px)}
+
+/* practice */
+.practice{display:grid;grid-template-columns:repeat(3,1fr);border-top:6px solid var(--ink);border-bottom:6px solid var(--ink)}
+.practice div{padding:36px clamp(20px,3vw,44px) 44px;border-right:6px solid var(--ink)}
+.practice div:last-child{border-right:0}
+.practice h3{font-weight:900;font-stretch:118%;font-size:clamp(40px,5vw,80px);line-height:.9;letter-spacing:-.03em;margin-bottom:18px}
+.practice p{max-width:28ch}
+
+/* contact */
+.contact{background:var(--sig);padding-top:100px;padding-bottom:70px;margin-top:120px}
+.contact h2{font-weight:800;font-stretch:112%;font-size:clamp(26px,3.2vw,46px);line-height:1;max-width:20ch}
+.mail{all:unset;display:block;cursor:pointer;margin-top:30px;font-weight:900;font-stretch:125%;font-size:clamp(34px,8.2vw,150px);line-height:.9;letter-spacing:-.04em;word-break:break-word}
+.mail:hover{text-decoration:underline;text-decoration-thickness:.08em;text-underline-offset:.1em}
+.mail:focus-visible{outline:4px solid var(--ink);outline-offset:8px}
+.copied{display:block;margin-top:14px;font-weight:700;min-height:1.5em}
+footer{background:var(--ink);color:var(--concrete);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:26px;padding-bottom:100px;font-size:15px;font-weight:500}
+
+@media (max-width:860px){
+  .bar nav a:not(.tag){display:none}
+  .statement .cols{grid-template-columns:1fr}
+  .practice{grid-template-columns:1fr}
+  .practice div{border-right:0;border-bottom:6px solid var(--ink)}
+  .practice div:last-child{border-bottom:0}
+  .hero-mid{flex-direction:column;align-items:start;gap:16px}
+  .hero-mid p,.hint{margin-bottom:0}
+  .head{flex-direction:column;align-items:start}
+}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .slab{transition:none} }
+</style>
+</head>
+<body data-design="monolith">
+
+<header class="hero" id="hero">
+  <svg class="tex" aria-hidden="true" width="100%" height="100%">
+    <filter id="rak" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency=".62" numOctaves="4" seed="7" result="n"/>
+      <feDiffuseLighting in="n" surfaceScale="2.6" diffuseConstant="1.15" lighting-color="#ffffff">
+        <fePointLight id="pl" x="300" y="200" z="70"/>
+      </feDiffuseLighting>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#rak)"/>
+  </svg>
+
+  <div class="bar pad">
+    <a href="#hero" aria-label="Norda Architects, top">NORDA</a>
+    <nav aria-label="Main">
+      <a href="#projects">Projects</a>
+      <a href="#practice">Practice</a>
+      <a class="tag" href="#contact">Start a project</a>
+    </nav>
+  </div>
+
+  <div class="hero-mid pad">
+    <p>Concrete, daylight and nothing to hide.</p>
+    <div class="hint">Move your cursor. The light is yours.</div>
+  </div>
+  <div class="word pad" aria-hidden="true">NORDA</div>
+</header>
+
+<main>
+  <section class="statement pad">
+    <h2>We build with the structure showing.</h2>
+    <div class="cols">
+      <p>A wall should hold the roof up and look like it. We pour, cast and stack in a small number of honest materials, then spend our time on the part that matters: how light falls across them.</p>
+      <p>Since 2009 we have finished <b>31 buildings</b> in six countries. Each one is made from fewer materials than the last.</p>
+    </div>
+  </section>
+
+  <section class="slabs" id="projects">
+    <div class="head pad">
+      <h2>Built work</h2>
+      <p>Drag the row sideways, or scroll it with the arrow keys.</p>
+    </div>
+    <div class="strip" id="strip" tabindex="0" role="region" aria-label="Projects, scrollable">
+      <article class="slab"><div class="facade f1"></div>
+        <div class="n">14<small>storeys</small></div>
+        <div class="cap"><h3>Ninth Street Housing</h3><span>48 apartments, Eastfield, 2022</span></div></article>
+      <article class="slab"><div class="facade f2"></div>
+        <div class="n">3<small>storeys</small></div>
+        <div class="cap"><h3>Harbour Library</h3><span>Public library, Port Sellen, 2023</span></div></article>
+      <article class="slab"><div class="facade f3"></div>
+        <div class="n">2<small>storeys</small></div>
+        <div class="cap"><h3>Ridge House</h3><span>Private residence, Tarn Valley, 2024</span></div></article>
+      <article class="slab"><div class="facade f4"></div>
+        <div class="n">1<small>storey</small></div>
+        <div class="cap"><h3>Salt Works Pavilion</h3><span>Cultural pavilion, Marram Coast, 2021</span></div></article>
+    </div>
+  </section>
+
+  <section id="practice" class="pad" style="padding-inline:0">
+    <div class="practice">
+      <div><h3>Houses</h3><p>One family, one site, one pour. From a single room to a whole hillside.</p></div>
+      <div><h3>Public</h3><p>Libraries, halls and pavilions built to be used hard for a hundred years.</p></div>
+      <div><h3>Housing</h3><p>Apartments with deep walls, real balconies and a stair you want to take.</p></div>
+    </div>
+  </section>
+
+  <section class="contact pad" id="contact">
+    <h2>Have a site and a brief? Write to us.</h2>
+    <button class="mail" id="mail" type="button" data-addr="studio@norda.example">studio@norda.example</button>
+    <span class="copied" id="copied" role="status"></span>
+  </section>
+</main>
+
+<footer class="pad">
+  <span>Norda Architects</span>
+  <span>14 Foundry Lane, Northgate</span>
+  <span>Sample content for design review</span>
+</footer>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // raking light follows the pointer; before first move it sweeps on its own
+  var hero = document.getElementById('hero'), pl = document.getElementById('pl');
+  var tx = 0, ty = 0, cx = 0, cy = 0, moved = false, running = false, t0 = performance.now();
+  function size(){ var r = hero.getBoundingClientRect(); return { w: r.width / 2, h: r.height / 2 }; }
+  function set(x, y){ pl.setAttribute('x', x); pl.setAttribute('y', y); }
+  var s = size(); cx = tx = s.w * .35; cy = ty = s.h * .45; set(cx, cy);
+
+  hero.addEventListener('pointermove', function(e){
+    var r = hero.getBoundingClientRect();
+    tx = (e.clientX - r.left) / 2; ty = (e.clientY - r.top) / 2; moved = true; kick();
+  });
+  function frame(now){
+    var s = size();
+    if (!moved) {
+      var t = (now - t0) / 1000;
+      tx = s.w * (.5 + .38 * Math.sin(t * .55)); ty = s.h * (.45 + .25 * Math.sin(t * .8 + 1));
+    }
+    cx += (tx - cx) * .14; cy += (ty - cy) * .14;
+    set(cx.toFixed(1), cy.toFixed(1));
+    var still = moved && Math.abs(tx - cx) < .3 && Math.abs(ty - cy) < .3;
+    if (still) { running = false; return; }
+    requestAnimationFrame(frame);
+  }
+  function kick(){ if (!running) { running = true; requestAnimationFrame(frame); } }
+  if (!reduce) kick();
+
+  // pause the sweep when hero is offscreen
+  if ('IntersectionObserver' in window && !reduce) {
+    new IntersectionObserver(function(en){
+      if (en[0].isIntersecting) { if (!moved) kick(); } else running = false;
+    }).observe(hero);
+  }
+
+  // drag to scroll
+  var strip = document.getElementById('strip'), down = false, sx = 0, sl = 0, dragged = false;
+  strip.addEventListener('pointerdown', function(e){
+    if (e.pointerType === 'touch') return;
+    down = true; dragged = false; sx = e.clientX; sl = strip.scrollLeft; strip.classList.add('drag');
+  });
+  window.addEventListener('pointermove', function(e){
+    if (!down) return;
+    var dx = e.clientX - sx; if (Math.abs(dx) > 3) dragged = true;
+    strip.scrollLeft = sl - dx;
+  });
+  window.addEventListener('pointerup', function(){ down = false; strip.classList.remove('drag'); });
+  strip.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight') strip.scrollBy({ left: 380, behavior: 'smooth' });
+    if (e.key === 'ArrowLeft') strip.scrollBy({ left: -380, behavior: 'smooth' });
+  });
+
+  // copy email
+  var mail = document.getElementById('mail'), copied = document.getElementById('copied');
+  mail.addEventListener('click', function(){
+    var addr = mail.getAttribute('data-addr');
+    var done = function(){ copied.textContent = 'Email address copied.'; };
+    if (navigator.clipboard) navigator.clipboard.writeText(addr).then(done, function(){ location.href = 'mailto:' + addr; });
+    else location.href = 'mailto:' + addr;
+  });
+})();
+</script>
+<script src="../shared/picker.js"></script>
+</body>
+</html>
